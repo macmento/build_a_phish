@@ -1,0 +1,48 @@
+---
+# Project Settings
+op_number: "000-000" #Number to identify engagment
+ttl: '1985-06-30' #This is Time To Live
+user_tag: "user" #VM username tag
+
+# DNS
+dns: 'digitalocean'
+domain_name: 'hackersite.com'
+
+#Digital Ocean
+digitalocean_token:  "{{lookup('community.general.lastpass', 'Digitalocean', field='token' )}}" # Example useing lastpass
+digitalocean_region: "nyc1"
+digitalocean_size: "s-2vcpu-4gb"
+
+#OS User's CHANGE THESE SETTINGS
+users:
+  - username: razor
+    name: Razor
+    authorized_keys:
+      - "https://github.com/razor1980.keys"
+    home_create: yes
+    append: yes
+    home_mode: "0750"
+    shell: '/usr/bin/zsh'
+users_authorized_keys_exclusive: yes
+security_sudoers_passwordless:
+    - razor
+
+#Ansible Settings
+src_files: '../files'
+ansible_python_interpreter: /usr/bin/python3
+ansible_ssh_private_key_file: '~/.ssh/id_rsa'
+ansible_ssh_public_key_file: '~/.ssh/id_rsa.pub'
+ansible_ssh_user: 'ansible'
+zsh_antigen_theme: "romkatv/powerlevel10k powerlevel10k"
+
+#Expert
+ttl_tag: "TTL-{{ ttl }}"
+dockernet: "docker"
+docker_home_dir: '/opt/docker'
+pip_install_packages:
+  - name: docker
+pip_executable: pip3
+pip_package: python3-pip
+firewall_disable_ufw: true
+firewall_flush_rules_and_chains: false
+ntp_timezone: 'America/New_York'
